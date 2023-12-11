@@ -100,7 +100,7 @@ public class InputValidator {
         boolean isOverLength = Converter.parseToStringListByDelimiter(input, Delimiter.COMMA).stream()
                 .anyMatch(name -> name.length() > 5);
         if(isOverLength){
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.NOT_VALID_LENGTH);
         }
     }
 
@@ -109,11 +109,17 @@ public class InputValidator {
     public static void validateDuplicateNames(final List<String> names) {
         Set<String> nonDuplicateNames = new HashSet<>(names);
         if (names.size() != nonDuplicateNames.size()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.HAS_DUPLICATE);
         }
     }
 
-
-
+    //정수인지 검증
+    public static void validateNumeric(final String input){
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ErrorMessage.NOT_NUMERIC);
+        }
+    }
 
 }
